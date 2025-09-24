@@ -2,11 +2,11 @@ version: '3.8'
 services:
  web:
    image: php:8.2-apache
-   container_name: php-apache
-   volumes:
-     - ./src:/var/www/html
+   container_name: php-app
    ports:
      - "8080:80"
+   volumes:
+     - ./src:/var/www/html
    depends_on:
      - db
  db:
@@ -15,22 +15,10 @@ services:
    restart: always
    environment:
      MYSQL_ROOT_PASSWORD: rootpass
-     MYSQL_DATABASE: testdb
-     MYSQL_USER: user
-     MYSQL_PASSWORD: userpass
-   ports:
-     - "3306:3306"
+     MYSQL_DATABASE: myapp
+     MYSQL_USER: appuser
+     MYSQL_PASSWORD: apppass
    volumes:
      - db_data:/var/lib/mysql
- phpmyadmin:
-   image: phpmyadmin/phpmyadmin
-   container_name: phpmyadmin
-   depends_on:
-     - db
-   environment:
-     PMA_HOST: db
-     PMA_PORT: 3306
-   ports:
-     - "8081:80"
 volumes:
- db_data:
+ db_data
